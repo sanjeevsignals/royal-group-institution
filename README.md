@@ -12,15 +12,6 @@ The document presents a new model for aspirant development — one that is evalu
 
 ---
 
-## Live Page
-
-> **After deployment**, your live URL will be:
-> `https://YOUR-GITHUB-USERNAME.github.io/royal-group-institution/royal-group-institution.html`
->
-> Replace `YOUR-GITHUB-USERNAME` with your actual GitHub username.
-
----
-
 ## What This Document Covers
 
 | Section | Description |
@@ -56,17 +47,6 @@ Every aspirant moves through four progressive stages — each one building on th
 
 ---
 
-## Standards & Quality
-
-- ✅ Valid HTML5 — zero errors
-- ✅ Semantic HTML (`<main>`, `<section>`, `<header>`, `<footer>`, `<h1>`–`<h3>`)
-- ✅ WCAG accessibility — skip link, aria-hidden, aria-label, alt text
-- ✅ SEO ready — Open Graph tags, meta description, canonical link
-- ✅ `prefers-reduced-motion` supported
-- ✅ Zero inline styles
-- ✅ All CSS variables defined and consistent
-
----
 
 ## Partnership
 
