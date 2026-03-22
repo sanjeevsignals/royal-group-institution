@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>May Attempt Execution System — CA Final Group B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --mc-red: #c0392b;
+  --mc-red-dark: #96281b;
+  --mc-red-light: #f8d7d4;
+  --mc-blue: #1a5276;
+  --mc-blue-mid: #2471a3;
+  --mc-blue-light: #d6eaf8;
+  --mc-green: #1e8449;
+  --mc-green-light: #d5f5e3;
+  --mc-orange: #d35400;
+  --mc-orange-light: #fdebd0;
+  --bg: #f2f2f2;
+  --bg-white: #ffffff;
+  --border: #e0e0e0;
+  --border-mid: #cccccc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #444444;
+  --text-muted: #777777;
+  --nav-bg: #1a1a1a;
+  --tag-bg: #e8f4f8;
+  --tag-color: #1a5276;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:14px;}
+body{font-family:'Inter',Arial,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6;}
+
+/* TICKER */
+.ticker-bar{background:#96281b;padding:5px 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-block;animation:ticker 45s linear infinite;font-size:11px;color:#fff;font-family:'Roboto Mono',monospace;letter-spacing:.04em;}
+.ticker-inner span{margin:0 32px;}
+.t-up{color:#7dff9a;}.t-dn{color:#ff8a80;}
+@keyframes ticker{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
+
+/* HEADER */
+.site-header{background:var(--mc-red);}
+.header-main{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.logo-name{font-family:'Noto Serif',Georgia,serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.75);letter-spacing:.12em;text-transform:uppercase;margin-top:2px;}
+.header-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:3px;padding:8px 16px;text-align:right;}
+.header-badge-top{font-size:10px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase;}
+.header-badge-bottom{font-size:13px;font-weight:600;color:#fff;margin-top:2px;}
+
+/* NAV */
+.site-nav{background:var(--nav-bg);border-bottom:2px solid var(--mc-red);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;gap:0;overflow-x:auto;}
+.nav-item{font-size:12px;font-weight:500;color:#ccc;padding:10px 14px;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;letter-spacing:.03em;}
+.nav-item:hover{color:#fff;}
+.nav-item.active{color:#fff;border-bottom-color:var(--mc-red);}
+
+/* LAYOUT */
+.page-wrap{max-width:1200px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start;}
+.breadcrumb{font-size:11px;color:var(--text-muted);margin-bottom:12px;grid-column:1/-1;display:flex;align-items:center;gap:6px;}
+.breadcrumb span{color:var(--mc-red);}
+.breadcrumb-sep{color:var(--border-mid);}
+
+/* ARTICLE HEADER */
+.article-header{background:var(--bg-white);border:1px solid var(--border);border-top:3px solid var(--mc-red);padding:20px 24px 16px;margin-bottom:12px;}
+.article-category{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--mc-red);margin-bottom:10px;}
+.article-title{font-family:'Noto Serif',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25;color:var(--text-primary);margin-bottom:10px;}
+.article-desc{font-size:14px;color:var(--text-secondary);line-height:1.55;margin-bottom:14px;border-left:3px solid var(--mc-red);padding-left:12px;font-style:italic;}
+.article-meta{display:flex;align-items:center;gap:10px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);flex-wrap:wrap;}
+.meta-dot{color:var(--border-mid);}
+.tag{display:inline-block;background:var(--tag-bg);color:var(--tag-color);font-size:10px;font-weight:500;padding:2px 8px;border-radius:2px;letter-spacing:.05em;}
+.tag-red{background:var(--mc-red-light);color:var(--mc-red-dark);}
+.tag-green{background:var(--mc-green-light);color:var(--mc-green);}
+.tag-orange{background:var(--mc-orange-light);color:var(--mc-orange);}
+
+/* CARDS */
+.card{background:var(--bg-white);border:1px solid var(--border);margin-bottom:12px;overflow:hidden;}
+.card-header{background:var(--mc-blue);padding:10px 16px;display:flex;align-items:center;gap:10px;}
+.card-header-red{background:var(--mc-red);}
+.card-header-dark{background:#2c2c2c;}
+.card-header-green{background:var(--mc-green);}
+.card-header h3{font-size:12px;font-weight:600;color:#fff;letter-spacing:.08em;text-transform:uppercase;}
+.card-header-num{background:rgba(255,255,255,.2);border-radius:2px;padding:1px 7px;font-size:11px;font-family:'Roboto Mono',monospace;color:#fff;}
+.card-body{padding:16px;}
+
+/* TIER TABLE */
+.tier-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.tier-table thead tr{background:#f0f0f0;}
+.tier-table th{padding:8px 10px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border);}
+.tier-table td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top;font-size:12.5px;color:var(--text-secondary);line-height:1.5;}
+.tier-table tr:last-child td{border-bottom:none;}
+.tier-table tr:hover td{background:#fafafa;}
+.tier-table td:first-child{font-weight:600;color:var(--text-primary);}
+.t1b{display:inline-block;background:#fff3cd;color:#856404;font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.08em;text-transform:uppercase;}
+.t2b{display:inline-block;background:var(--mc-green-light);color:var(--mc-green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.08em;text-transform:uppercase;}
+.t3b{display:inline-block;background:#f0f0f0;color:#666;font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.08em;text-transform:uppercase;}
+.count-cell{font-family:'Roboto Mono',monospace;font-size:13px;font-weight:500;color:var(--mc-red);text-align:center;}
+
+/* FAILURE */
+.failure-list{list-style:none;}
+.failure-item{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;}
+.failure-item:last-child{border-bottom:none;}
+.failure-num{background:var(--mc-red);color:#fff;font-size:10px;font-weight:700;font-family:'Roboto Mono',monospace;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.failure-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;}
+.failure-desc{font-size:12px;color:var(--text-secondary);line-height:1.55;}
+
+/* ROADMAP */
+.roadmap-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.roadmap-table th{padding:8px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);background:#f4f4f4;border-bottom:2px solid var(--border);text-align:left;}
+.roadmap-table td{padding:12px 10px;border-bottom:1px solid var(--border);vertical-align:top;font-size:12.5px;color:var(--text-secondary);line-height:1.55;}
+.roadmap-table tr:last-child td{border-bottom:none;}
+.phase-pill{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.p1{background:#fff3cd;color:#856404;}
+.p2{background:var(--mc-blue-light);color:var(--mc-blue);}
+.p3{background:#e8d5f5;color:#6a1b9a;}
+.phase-name{font-weight:600;font-size:13px;color:var(--text-primary);}
+
+/* KEYWORD TABLE */
+.kw-table{width:100%;border-collapse:collapse;}
+.kw-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:12.5px;vertical-align:top;line-height:1.55;}
+.kw-table tr:last-child td{border-bottom:none;}
+.kw-table tr:hover td{background:#fafafa;}
+.kw-term{font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--mc-red-dark);font-weight:500;width:40%;background:#fefafa;}
+.kw-desc{color:var(--text-secondary);}
+
+/* SLAB TABLE */
+.slab-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.slab-table th{background:#f4f4f4;padding:8px 12px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);border-bottom:2px solid var(--border);text-align:left;}
+.slab-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-secondary);}
+.slab-table tr:last-child td{border-bottom:none;}
+.slab-table tr:hover td{background:#fafafa;}
+.rate-cell{font-weight:600;color:var(--mc-blue);font-family:'Roboto Mono',monospace;font-size:13px;}
+.slab-nil{color:var(--mc-green)!important;font-weight:600;}
+
+/* FORMULA BOX */
+.formula-box{background:#f8f9fa;border:1px solid var(--border);border-left:4px solid var(--mc-blue);padding:14px 16px;margin:12px 0;font-family:'Roboto Mono',monospace;font-size:12px;color:var(--text-secondary);line-height:1.9;}
+.formula-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--mc-blue);margin-bottom:8px;font-family:'Inter',Arial,sans-serif;}
+
+/* TRAP */
+.trap-list{list-style:none;}
+.trap-item{display:flex;gap:14px;padding:13px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.trap-item:last-child{border-bottom:none;}
+.trap-icon{background:#fff3cd;color:#856404;font-size:10px;font-weight:700;font-family:'Roboto Mono',monospace;padding:3px 7px;border-radius:2px;flex-shrink:0;margin-top:2px;white-space:nowrap;}
+.trap-title{font-weight:600;font-size:13px;color:var(--text-primary);margin-bottom:4px;}
+.trap-desc{font-size:12px;color:var(--text-secondary);line-height:1.55;}
+
+/* PASS GRID */
+.pass-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.pass-card{background:var(--bg-white);padding:16px;}
+.pass-num{font-family:'Noto Serif',Georgia,serif;font-size:36px;font-weight:700;line-height:1;margin-bottom:8px;}
+.pass-card:nth-child(1) .pass-num{color:var(--mc-red);}
+.pass-card:nth-child(2) .pass-num{color:var(--mc-blue);}
+.pass-card:nth-child(3) .pass-num{color:var(--mc-green);}
+.pass-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:6px;}
+.pass-desc{font-size:11.5px;color:var(--text-secondary);line-height:1.6;}
+
+/* IBS STEPS */
+.ibs-steps{list-style:none;counter-reset:ibs;}
+.ibs-step{counter-increment:ibs;display:flex;gap:14px;padding:12px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.ibs-step:last-child{border-bottom:none;}
+.ibs-step::before{content:counter(ibs);background:var(--mc-blue);color:#fff;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-family:'Roboto Mono',monospace;}
+.ibs-title{font-weight:600;font-size:13px;color:var(--text-primary);margin-bottom:4px;}
+.ibs-desc{font-size:12px;color:var(--text-secondary);line-height:1.55;}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:12px;}
+.sb-card{background:var(--bg-white);border:1px solid var(--border);overflow:hidden;}
+.sb-header{background:var(--mc-red);padding:8px 14px;}
+.sb-header h4{font-size:11px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.1em;}
+.sb-header-blue{background:var(--mc-blue);}
+.sb-body{padding:12px 14px;}
+.sb-stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.sb-stat-row:last-child{border-bottom:none;}
+.sb-stat-label{color:var(--text-secondary);}
+.sb-stat-val{font-weight:600;font-family:'Roboto Mono',monospace;font-size:13px;color:var(--mc-red);}
+.sb-stat-val.green{color:var(--mc-green);}
+.sb-stat-val.blue{color:var(--mc-blue);}
+.quick-link{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--mc-blue-mid);cursor:pointer;}
+.quick-link:last-child{border-bottom:none;}
+.quick-link::before{content:'›';font-size:16px;color:var(--mc-red);line-height:1;}
+.quick-link:hover{color:var(--mc-red);}
+.alert-box{background:#fff8e1;border:1px solid #ffd54f;border-left:4px solid #f9a825;padding:12px 14px;font-size:12px;color:#5d4037;line-height:1.6;}
+.alert-title{font-weight:700;font-size:12px;color:#e65100;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;}
+
+/* BOTTOM QUOTE */
+.bottom-quote{grid-column:1/-1;background:var(--mc-blue);padding:20px 24px;display:flex;align-items:center;gap:16px;margin-top:4px;}
+.bq-bar{width:4px;background:#fff;border-radius:2px;flex-shrink:0;align-self:stretch;}
+.bq-text{font-family:'Noto Serif',Georgia,serif;font-size:15px;font-style:italic;color:#fff;line-height:1.55;}
+.bq-attr{font-size:11px;color:rgba(255,255,255,.6);margin-top:6px;letter-spacing:.08em;text-transform:uppercase;font-family:'Inter',Arial,sans-serif;}
+
+/* FOOTER */
+.site-footer{background:#1a1a1a;padding:16px 20px;margin-top:20px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#888;flex-wrap:wrap;gap:8px;}
+.footer-brand{color:#ccc;font-weight:600;}
+.footer-disc{max-width:600px;line-height:1.5;}
+
+@media(max-width:768px){
+  .page-wrap{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .pass-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <span>NIFTY 50 <span class="t-up">▲ 22,648.20 (+0.83%)</span></span>
+    <span>SENSEX <span class="t-up">▲ 74,742.50 (+0.76%)</span></span>
+    <span>CA FINAL MAY 2025 &nbsp;|&nbsp; Finance Act 2025 Applicable</span>
+    <span>DT Paper 4 &nbsp;|&nbsp; IBS Paper 6 &nbsp;|&nbsp; A.Y. 2026-27</span>
+    <span>600+ Questions &nbsp;·&nbsp; 90-Day Roadmap &nbsp;·&nbsp; Gold Medal Target</span>
+    <span>NIFTY BANK <span class="t-up">▲ 48,320.10 (+0.61%)</span></span>
+    <span>NIFTY 50 <span class="t-up">▲ 22,648.20 (+0.83%)</span></span>
+    <span>SENSEX <span class="t-up">▲ 74,742.50 (+0.76%)</span></span>
+    <span>CA FINAL MAY 2025 &nbsp;|&nbsp; Finance Act 2025 Applicable</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-main">
+    <div>
+      <div class="logo-name">Sanjeev Signals</div>
+      <div class="logo-sub">CA Final · Tax Mastery Edition · May 2025</div>
+    </div>
+    <div class="header-badge">
+      <div class="header-badge-top">Target Attempt</div>
+      <div class="header-badge-bottom">CA Final May 2025 &nbsp;·&nbsp; Group B</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-item active">Overview</div>
+    <div class="nav-item">Topic Priority</div>
+    <div class="nav-item">DT Strategy</div>
+    <div class="nav-item">IBS Framework</div>
+    <div class="nav-item">90-Day Roadmap</div>
+    <div class="nav-item">Tax Slabs</div>
+    <div class="nav-item">Trap Control</div>
+    <div class="nav-item">Revision System</div>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    Home <span class="breadcrumb-sep">›</span> CA Final <span class="breadcrumb-sep">›</span> Group B <span class="breadcrumb-sep">›</span> <span>May Attempt Execution System</span>
+  </div>
+
+  <main>
+
+    <!-- ARTICLE HEADER -->
+    <div class="article-header">
+      <div class="article-category">Execution Blueprint</div>
+      <h1 class="article-title">May Attempt Execution System: CA Final Group B Mastery</h1>
+      <p class="article-desc">To secure a rank or Gold Medal in Direct Tax, you must transcend the student mindset and adopt the Architect approach. Hard work is a commodity — strategic precision is the rarity.</p>
+      <div class="article-meta">
+        <span>Finance Act 2025</span>
+        <span class="meta-dot">·</span>
+        <span>A.Y. 2026-27</span>
+        <span class="meta-dot">·</span>
+        <span>Sanjeev Signals</span>
+        <span class="meta-dot">·</span>
+        <span class="tag tag-red">Direct Tax</span>
+        <span class="tag tag-green">IBS Paper 6</span>
+        <span class="tag">600+ Questions</span>
+        <span class="tag tag-orange">Gold Medal Target</span>
+      </div>
+    </div>
+
+    <!-- 01 TOPIC PRIORITY -->
+    <div class="card">
+      <div class="card-header card-header-dark">
+        <div class="card-header-num">01</div>
+        <h3>Topic Importance Ranking — Priority by Volume &amp; Frequency</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="tier-table">
+          <thead>
+            <tr>
+              <th style="width:80px;">Tier</th>
+              <th>Chapter</th>
+              <th>Focus Note</th>
+              <th style="text-align:center;width:70px;">SM Q's</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="t1b">Tier 1</span></td>
+              <td><strong>Ch 10 — TDS, TCS, Advance Tax</strong></td>
+              <td>Highest volume. Non-negotiable core.</td>
+              <td class="count-cell">55</td>
+            </tr>
+            <tr>
+              <td><span class="t1b">Tier 1</span></td>
+              <td><strong>Ch 20 — Non-Resident Taxation</strong></td>
+              <td>Critical for both Paper 4 and Paper 6 (IBS).</td>
+              <td class="count-cell">46</td>
+            </tr>
+            <tr>
+              <td><span class="t1b">Tier 1</span></td>
+              <td><strong>Ch 3 — PGBP</strong></td>
+              <td>Heart of Paper 4. Highest computation density.</td>
+              <td class="count-cell">44</td>
+            </tr>
+            <tr>
+              <td><span class="t1b">Tier 1</span></td>
+              <td><strong>Ch 21 — Transfer Pricing</strong></td>
+              <td>High weightage relative to chapter length.</td>
+              <td class="count-cell">28</td>
+            </tr>
+            <tr>
+              <td><span class="t1b">Tier 1</span></td>
+              <td><strong>Ch 2 — Capital Gains &amp; Ch 8 — Various Entities</strong></td>
+              <td>Essential for complex computations. MAT/AMT link.</td>
+              <td class="count-cell">—</td>
+            </tr>
+            <tr>
+              <td><span class="t2b">Tier 2</span></td>
+              <td><strong>Ch 9 — Charitable Trusts</strong></td>
+              <td>Complex, frequent, high-scoring. Rarely mastered.</td>
+              <td class="count-cell">40</td>
+            </tr>
+            <tr>
+              <td><span class="t2b">Tier 2</span></td>
+              <td><strong>Ch 11 — Assessment Procedure</strong></td>
+              <td>Procedural accuracy — where easy marks are lost.</td>
+              <td class="count-cell">27</td>
+            </tr>
+            <tr>
+              <td><span class="t2b">Tier 2</span></td>
+              <td><strong>Ch 19 — Double Taxation Relief &amp; Ch 14 — Penalties</strong></td>
+              <td>Procedural + computation blend. Frequently tested.</td>
+              <td class="count-cell">—</td>
+            </tr>
+            <tr>
+              <td><span class="t3b">Tier 3</span></td>
+              <td><strong>Ch 1, 5, 6, 25 — Basics, Clubbing, Set-off, Model Tax</strong></td>
+              <td>Conceptual anchors. Revise — do not over-invest time.</td>
+              <td class="count-cell">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 02 FAILURE PATTERNS -->
+    <div class="card">
+      <div class="card-header card-header-red">
+        <div class="card-header-num">02</div>
+        <h3>Gold Medalist's Failure Pattern Analysis — The Presentation Gap</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <ul class="failure-list">
+          <li class="failure-item">
+            <div class="failure-num">1</div>
+            <div>
+              <div class="failure-title">Keyword Deficiency</div>
+              <div class="failure-desc">Failing to use ICAI-mandated terminology. "Diversion of income by overriding title" and "Application of income" are not interchangeable. The examiner marks keywords — not intent. A technically correct answer without legal phraseology loses marks.</div>
+            </div>
+          </li>
+          <li class="failure-item">
+            <div class="failure-num">2</div>
+            <div>
+              <div class="failure-title">Mathematical Complacency</div>
+              <div class="failure-desc">Neglecting removal of indexation benefits for A.Y. 2026-27 or miscalculating corporate surcharge tiers. One missed threshold cascades errors across multiple questions in the same exam session.</div>
+            </div>
+          </li>
+          <li class="failure-item">
+            <div class="failure-num">3</div>
+            <div>
+              <div class="failure-title">Auditing vs. Solving</div>
+              <div class="failure-desc">Reading through solutions without manual computation is the primary catalyst for exam-day paralysis. If you haven't physically computed the 600+ questions, you are informed — not prepared. The distinction is everything on exam day.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 03 DT STRATEGY -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-num">03</div>
+        <h3>Direct Tax — Paper 4 · Linear Excellence Strategy</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="kw-table">
+          <tbody>
+            <tr>
+              <td class="kw-term">Step 1 — Concept Acquisition</td>
+              <td class="kw-desc">Anchor to Section numbers. Sec 45(2) for conversions. Sec 50B for slump sales. The section number is not a formality — it is the legal argument. No section reference, no full marks.</td>
+            </tr>
+            <tr>
+              <td class="kw-term">Step 2 — Tactical Practice</td>
+              <td class="kw-desc">Treat the 600+ questions as 600+ potential exam scenarios. Every manual computation builds the muscle memory the exam will test. Reading is not the same as doing.</td>
+            </tr>
+            <tr>
+              <td class="kw-term">Step 3 — Precision Marking</td>
+              <td class="kw-desc">Compare your drafts against the highlighted keywords in the model answer. Absence of specific legal phraseology = incorrect answer, regardless of numerical accuracy.</td>
+            </tr>
+            <tr>
+              <td class="kw-term">Ideal Presentation Format</td>
+              <td class="kw-desc"><strong>Heading:</strong> "Computation of Total Income/Tax Liability of [Name] for A.Y. 2026-27." Standardised table with Particulars, Working Note Reference, and Amount. Detailed footnotes with Key Adjustments — this is where the distinguishing marks are awarded.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 04 IBS FRAMEWORK -->
+    <div class="card">
+      <div class="card-header card-header-green">
+        <div class="card-header-num">04</div>
+        <h3>IBS — Paper 6 · The 4-Step Interlinking Framework</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <ol class="ibs-steps">
+          <li class="ibs-step">
+            <div>
+              <div class="ibs-title">Facts of the Case</div>
+              <div class="ibs-desc">Succinct summary. No padding. Establish the entity type and transaction in the opening line. The examiner must see within the first sentence what kind of problem this is.</div>
+            </div>
+          </li>
+          <li class="ibs-step">
+            <div>
+              <div class="ibs-title">Provision of Law</div>
+              <div class="ibs-desc">State the sections explicitly. Interlink Transfer Pricing u/s 92 with Non-Resident Taxation u/s 5 where applicable. A single case study can require three or four sections simultaneously.</div>
+            </div>
+          </li>
+          <li class="ibs-step">
+            <div>
+              <div class="ibs-title">Analysis</div>
+              <div class="ibs-desc">Link entity type (Ch 8) to the transaction. MAT adjustments for a company. AMT for a Cooperative Society. These are not interchangeable. One transaction often triggers dual implications — identify both.</div>
+            </div>
+          </li>
+          <li class="ibs-step">
+            <div>
+              <div class="ibs-title">Conclusion</div>
+              <div class="ibs-desc">Definitive tax impact. Quantum + applicable section. Never leave a conclusion ambiguous. A range is not a conclusion — a number with a section is a conclusion.</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 05 ROADMAP -->
+    <div class="card">
+      <div class="card-header card-header-dark">
+        <div class="card-header-num">05</div>
+        <h3>90-Day Execution Roadmap</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="roadmap-table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Timeline</th>
+              <th>Primary Objective</th>
+              <th>Daily Metric</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="phase-pill p1">Phase 1</div>
+                <div class="phase-name">Groundwork</div>
+              </td>
+              <td style="font-family:'Roboto Mono',monospace;color:var(--mc-red);font-size:12px;">Days 1–45</td>
+              <td>Concept clarity. Complete Tier 1 Chapters: Ch 3, 10, 20, 21. Full Concept Book + Revision Videos.</td>
+              <td>One full chapter per cycle. No rushing to Phase 2.</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="phase-pill p2">Phase 2</div>
+                <div class="phase-name">Application</div>
+              </td>
+              <td style="font-family:'Roboto Mono',monospace;color:var(--mc-red);font-size:12px;">Days 46–75</td>
+              <td>Solve all 600+ questions manually from the Question Bank. Every calculation by hand — feel the friction of the numbers.</td>
+              <td><strong>20 questions per day. Non-negotiable.</strong></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="phase-pill p3">Phase 3</div>
+                <div class="phase-name">Polishing</div>
+              </td>
+              <td style="font-family:'Roboto Mono',monospace;color:var(--mc-red);font-size:12px;">Days 76–90</td>
+              <td>Review RTPs, MTPs, and Additional Questions AQ.1–AQ.14. Trend prediction from recent attempts.</td>
+              <td>3 full-syllabus mock exams under strict exam conditions.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 06 KEYWORDS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-num">06</div>
+        <h3>ICAI Keyword Arsenal — Defined Terms for Marking Scheme Match</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="kw-table">
+          <tbody>
+            <tr>
+              <td class="kw-term">"Deemed Transfer u/s 45(2)"</td>
+              <td class="kw-desc">For conversion of capital assets into stock-in-trade. The word "deemed" carries legal weight — omit it and the answer weakens regardless of numerical accuracy.</td>
+            </tr>
+            <tr>
+              <td class="kw-term">"Diversion of income at source"</td>
+              <td class="kw-desc">Where legal title is overridden before income arises. Distinct from "Application of income" — the timing of the diversion is the legal test that determines taxability.</td>
+            </tr>
+            <tr>
+              <td class="kw-term">"Full value of consideration being higher of FMV1 or FMV2"</td>
+              <td class="kw-desc">For Slump Sales u/s 50B. Always state the comparison explicitly — never assume the examiner will infer the higher value without your working note.</td>
+            </tr>
+            <tr>
+              <td class="kw-term">"Net Worth excludes Revaluation Reserves"</td>
+              <td class="kw-desc">The single most commonly missed adjustment in Slump Sale computations. One line. Multiple marks at stake.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 07 TAX SLABS -->
+    <div class="card">
+      <div class="card-header card-header-dark">
+        <div class="card-header-num">07</div>
+        <h3>Tax Rate Architecture — A.Y. 2026-27 · Memory Mastery</h3>
+      </div>
+      <div class="card-body">
+        <p style="font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">Default Tax Regime — Section 115BAC</p>
+        <table class="slab-table">
+          <thead><tr><th>Income Slab</th><th>Tax Rate</th></tr></thead>
+          <tbody>
+            <tr><td>Up to ₹4,00,000</td><td class="rate-cell slab-nil">Nil</td></tr>
+            <tr><td>₹4,00,001 – ₹8,00,000</td><td class="rate-cell">5%</td></tr>
+            <tr><td>₹8,00,001 – ₹12,00,000</td><td class="rate-cell">10%</td></tr>
+            <tr><td>₹12,00,001 – ₹16,00,000</td><td class="rate-cell">15%</td></tr>
+            <tr><td>₹16,00,001 – ₹20,00,000</td><td class="rate-cell">20%</td></tr>
+            <tr><td>₹20,00,001 – ₹24,00,000</td><td class="rate-cell">25%</td></tr>
+            <tr><td>Above ₹24,00,000</td><td class="rate-cell">30%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:var(--mc-green);margin-top:8px;line-height:1.6;"><strong>Rebate u/s 87A (New Regime):</strong> Full rebate up to ₹60,000 if total income ≤ ₹12,00,000. Effective tax = Nil for income up to ₹12L under new regime.</p>
+
+        <p style="font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 10px;">Shift-Out Option — Basic Exemption Tiers</p>
+        <table class="slab-table">
+          <thead><tr><th>Taxpayer Category</th><th>Basic Exemption</th></tr></thead>
+          <tbody>
+            <tr><td>Normal Resident</td><td class="rate-cell">₹2,50,000</td></tr>
+            <tr><td>Senior Citizen (Age 60–79)</td><td class="rate-cell">₹3,00,000</td></tr>
+            <tr><td>Super Senior Citizen (Age 80+)</td><td class="rate-cell">₹5,00,000</td></tr>
+          </tbody>
+        </table>
+
+        <div class="formula-box" style="margin-top:16px;">
+          <div class="formula-label">Marginal Relief Formula — Domestic Companies</div>
+          Tax Liability &nbsp;≤&nbsp; [Tax on Threshold + (Income − Threshold)]<br>
+          Threshold 1: Income &gt; ₹1 Crore &nbsp;→&nbsp; Surcharge @ 7%<br>
+          Threshold 2: Income &gt; ₹10 Crore &nbsp;→&nbsp; Surcharge @ 12%<br><br>
+          Apply at both thresholds independently. Never assume one covers the other.
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 TRAPS -->
+    <div class="card">
+      <div class="card-header card-header-red">
+        <div class="card-header-num">08</div>
+        <h3>Surgical Accuracy — The 4 Calculation Traps That Cost Ranks</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <ul class="trap-list">
+          <li class="trap-item">
+            <div class="trap-icon">TRAP 01</div>
+            <div>
+              <div class="trap-title">Marginal Relief Miscalculation</div>
+              <div class="trap-desc">Apply the formula at both surcharge thresholds independently. A single threshold error compounds across Questions 9 and 10-type scenarios. Verify by working backwards from the capped amount.</div>
+            </div>
+          </li>
+          <li class="trap-item">
+            <div class="trap-icon">TRAP 02</div>
+            <div>
+              <div class="trap-title">Indexation Removal — A.Y. 2026-27</div>
+              <div class="trap-desc">Under the new regime logic, cost = higher of actual cost or FMV as of 01.04.2001 (capped at SDV) — with no indexation applied. Applying indexation here is among the most heavily penalised errors.</div>
+            </div>
+          </li>
+          <li class="trap-item">
+            <div class="trap-icon">TRAP 03</div>
+            <div>
+              <div class="trap-title">Slump Sale Net Worth — Section 50B</div>
+              <div class="trap-desc">Use book value for assets. Use Stamp Duty Value for FMV1 component. Always exclude revaluation reserves. These three rules together define the entire computation architecture for Q18-type problems.</div>
+            </div>
+          </li>
+          <li class="trap-item">
+            <div class="trap-icon">TRAP 04</div>
+            <div>
+              <div class="trap-title">IBS Dual-Implication Blindness</div>
+              <div class="trap-desc">One transaction, two tax events. Conversion of asset to stock-in-trade: Capital Gains on conversion date (FMV − Cost) and Business Income on actual sale date (Sale Price − FMV). Missing either leg is a structural error that costs all sub-section marks.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 09 REVISION -->
+    <div class="card">
+      <div class="card-header card-header-dark">
+        <div class="card-header-num">09</div>
+        <h3>Three-Pass Revision System — Long-Term Retention</h3>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div class="pass-grid">
+          <div class="pass-card">
+            <div class="pass-num">1</div>
+            <div class="pass-title">Comprehensive Pass</div>
+            <div class="pass-desc">Solve every question. Mark as L1 (easy), L2 (tricky), L3 (conceptually difficult). Build your own difficulty map of the syllabus.</div>
+          </div>
+          <div class="pass-card">
+            <div class="pass-num">2</div>
+            <div class="pass-title">Targeted Pass</div>
+            <div class="pass-desc">Solve only L2 and L3 questions. Re-read every "Key Adjustment" note. Understand the why behind each non-obvious computation step.</div>
+          </div>
+          <div class="pass-card">
+            <div class="pass-num">3</div>
+            <div class="pass-title">1.5-Day Sprint</div>
+            <div class="pass-desc">Index and formula sheets only. Tax slab progressions. Surcharge thresholds. No new learning — only retrieval speed under time pressure.</div>
+          </div>
+        </div>
+        <div style="padding:14px 16px;">
+          <div class="formula-box" style="margin:0;">
+            <div class="formula-label">Time Management Discipline</div>
+            Target ratio: 1.8 minutes per mark<br>
+            10-mark PGBP problem → cap at 18 minutes, conclude, move on.<br><br>
+            Attempting 100% of paper at 90% accuracy &nbsp;&gt;&nbsp; Attempting 80% at 100% accuracy.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="alert-box">
+      <div class="alert-title">⚠ Critical — A.Y. 2026-27</div>
+      Finance Act 2025 is applicable. No indexation under the new regime. Verify all computations against ICAI Study Material before the exam.
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-header"><h4>Chapter Stats</h4></div>
+      <div class="sb-body">
+        <div class="sb-stat-row"><span class="sb-stat-label">Ch 10 — TDS/TCS</span><span class="sb-stat-val">55 Q</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Ch 20 — Non-Resident</span><span class="sb-stat-val">46 Q</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Ch 3 — PGBP</span><span class="sb-stat-val">44 Q</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Ch 9 — Trusts</span><span class="sb-stat-val green">40 Q</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Ch 21 — Trans. Pricing</span><span class="sb-stat-val">28 Q</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Ch 11 — Assessment</span><span class="sb-stat-val green">27 Q</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Total Target</span><span class="sb-stat-val blue">600+</span></div>
+      </div>
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-header"><h4>90-Day Milestones</h4></div>
+      <div class="sb-body">
+        <div class="sb-stat-row"><span class="sb-stat-label">Phase 1 Ends</span><span class="sb-stat-val blue">Day 45</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Phase 2 Ends</span><span class="sb-stat-val blue">Day 75</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Mock Exams</span><span class="sb-stat-val green">3 Full</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Daily Q Target</span><span class="sb-stat-val">20 / day</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Time per Mark</span><span class="sb-stat-val">1.8 min</span></div>
+      </div>
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-header sb-header-blue"><h4>Surcharge — Domestic Companies</h4></div>
+      <div class="sb-body">
+        <div class="sb-stat-row"><span class="sb-stat-label">Income &gt; ₹1 Crore</span><span class="sb-stat-val blue">7%</span></div>
+        <div class="sb-stat-row"><span class="sb-stat-label">Income &gt; ₹10 Crore</span><span class="sb-stat-val blue">12%</span></div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.6;">Apply Marginal Relief at both thresholds independently. Verify by working backwards from capped amount.</div>
+      </div>
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-header"><h4>Quick Navigation</h4></div>
+      <div class="sb-body">
+        <div class="quick-link">Topic Priority Ranking</div>
+        <div class="quick-link">DT Paper 4 Strategy</div>
+        <div class="quick-link">IBS 4-Step Framework</div>
+        <div class="quick-link">ICAI Keyword Arsenal</div>
+        <div class="quick-link">A.Y. 2026-27 Tax Slabs</div>
+        <div class="quick-link">Marginal Relief Formula</div>
+        <div class="quick-link">Top 4 Calculation Traps</div>
+        <div class="quick-link">Three-Pass Revision System</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- BOTTOM QUOTE — direct page-wrap child so grid-column:1/-1 spans full width -->
+  <div class="bottom-quote">
+    <div class="bq-bar"></div>
+    <div>
+      <div class="bq-text">"Discipline is the bridge between goals and accomplishment. Finish the 600+ questions, and the Gold Medal will follow."</div>
+      <div class="bq-attr">May Attempt Execution System &nbsp;·&nbsp; Sanjeev Signals</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Sanjeev Signals &nbsp;·&nbsp; CA Final Tax Mastery Edition</div>
+    <div class="footer-disc">For educational reference only. Finance Act 2025 applicable for A.Y. 2026-27. All provisions must be verified against ICAI Study Material and official circulars. Past paper references are indicative only.</div>
+  </div>
+</footer>
+
+</body>
+</html>
