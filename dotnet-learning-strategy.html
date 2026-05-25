@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Actually Learn .NET — A Honest Roadmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:wght@300;400;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1410;
+      --ink-soft: #3d3530;
+      --ink-muted: #7a6e68;
+      --paper: #faf7f2;
+      --paper-warm: #f3ede3;
+      --paper-rule: #e8e0d4;
+      --accent: #b5451b;
+      --accent-light: #e8724a;
+      --gold: #c9922a;
+      --code-bg: #f0ebe1;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.85;
+      font-size: 18px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3.5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.03) 80px,
+        rgba(255,255,255,0.03) 81px
+      );
+    }
+    .header-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      max-width: 760px;
+      margin: 0 auto 1rem;
+      letter-spacing: -0.01em;
+    }
+    header h1 em {
+      color: var(--accent-light);
+      font-style: italic;
+    }
+    .header-sub {
+      color: rgba(250,247,242,0.6);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── BYLINE ── */
+    .byline-bar {
+      background: var(--paper-warm);
+      border-bottom: 1px solid var(--paper-rule);
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .byline-bar .author-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .byline-bar .author-name span {
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-muted);
+      font-size: 0.85rem;
+      margin-left: 0.3rem;
+    }
+    .byline-bar .brand-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.2em 0.7em;
+      border-radius: 2px;
+    }
+    .byline-sep {
+      width: 1px;
+      height: 1rem;
+      background: var(--paper-rule);
+    }
+
+    .byline-bar .publish-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── RULE STRIP ── */
+    .rule-strip {
+      background: var(--accent);
+      height: 4px;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── OPENING ── */
+    .opening {
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--paper-rule);
+      margin-bottom: 3rem;
+    }
+    .opening p.lead {
+      font-size: 1.22rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+    .opening p.lead + p {
+      margin-top: 1.4rem;
+      color: var(--ink-muted);
+    }
+
+    /* ── SECTION ── */
+    section {
+      margin-bottom: 3rem;
+    }
+    .section-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--ink-soft);
+      margin: 1.8rem 0 0.6rem;
+    }
+    p { margin-bottom: 1.2rem; color: var(--ink-soft); }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── PHASE CARDS ── */
+    .phase-grid {
+      display: grid;
+      gap: 1rem;
+      margin: 1.8rem 0;
+    }
+    .phase-card {
+      background: var(--paper-warm);
+      border-left: 3px solid var(--accent);
+      padding: 1.4rem 1.6rem;
+      border-radius: 0 4px 4px 0;
+      position: relative;
+    }
+    .phase-card .phase-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .phase-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .phase-card p {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--ink-muted);
+    }
+    .phase-card .duration {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* ── CALLOUT BOX ── */
+    .callout {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+      border-radius: 2px;
+      position: relative;
+    }
+    .callout::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--accent);
+      position: absolute;
+      top: -0.5rem;
+      left: 1.2rem;
+      line-height: 1;
+      opacity: 0.5;
+    }
+    .callout p {
+      color: rgba(250,247,242,0.88);
+      font-size: 1.08rem;
+      font-style: italic;
+      line-height: 1.75;
+      padding-left: 1rem;
+    }
+
+    /* ── CODE / INLINE MONO ── */
+    code {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82em;
+      background: var(--code-bg);
+      padding: 0.15em 0.45em;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+    pre {
+      background: var(--code-bg);
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.5rem;
+      overflow-x: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin: 1.5rem 0;
+      border-radius: 0 4px 4px 0;
+      word-break: break-all;
+    }
+
+    /* ── RESOURCE TABLE ── */
+    .resource-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .resource-table th {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      text-align: left;
+      padding: 0.6rem 1rem;
+      border-bottom: 2px solid var(--paper-rule);
+    }
+    .resource-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--paper-rule);
+      color: var(--ink-soft);
+      vertical-align: top;
+    }
+    .resource-table tr:last-child td { border-bottom: none; }
+    .resource-table td:first-child {
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15em 0.55em;
+      border-radius: 2px;
+      background: var(--paper-rule);
+      color: var(--ink-muted);
+    }
+    .badge.free { background: #d4edda; color: #276238; }
+    .badge.paid { background: #fce8d4; color: #8a3a10; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--paper-rule);
+      margin: 2.5rem 0;
+    }
+    .divider.ornament {
+      border: none;
+      margin: 2.5rem 0;
+      position: relative;
+      height: 1px;
+      background: var(--paper-rule);
+    }
+    .divider.ornament::before {
+      content: '— ✦ —';
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.3em;
+      background: var(--paper);
+      padding: 0 1rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+    }
+
+    /* ── MISTAKE LIST ── */
+    .mistake-list {
+      list-style: none;
+      margin: 1.2rem 0;
+    }
+    .mistake-list li {
+      padding: 0.75rem 0 0.75rem 2rem;
+      border-bottom: 1px solid var(--paper-rule);
+      position: relative;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .mistake-list li:last-child { border-bottom: none; }
+    .mistake-list li::before {
+      content: '✗';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    /* ── FINAL CTA ── */
+    .cta-block {
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-rule);
+      border-top: 3px solid var(--gold);
+      padding: 2rem 2.2rem;
+      margin: 2.5rem 0;
+      border-radius: 0 0 4px 4px;
+    }
+    .cta-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-style: normal;
+      color: var(--ink);
+      margin: 0 0 0.8rem;
+    }
+    .cta-block p { font-size: 0.95rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(250,247,242,0.45);
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      margin-top: 4rem;
+    }
+
+    /* ── SOCIAL CTA ── */
+    .social-cta {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-rule);
+      border-left: 3px solid var(--accent);
+      padding: 1.2rem 1.6rem;
+      margin: 2.5rem 0 0;
+      border-radius: 0 4px 4px 0;
+      flex-wrap: wrap;
+    }
+    .social-cta .cta-text {
+      flex: 1;
+      min-width: 200px;
+    }
+    .social-cta .cta-text p {
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+    .social-cta .cta-text strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .social-cta a.cta-btn {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--accent);
+      padding: 0.55em 1.2em;
+      border-radius: 2px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .social-cta a.cta-btn:hover { background: var(--accent-light); }
+
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      header { padding: 2.5rem 1.5rem 2rem; }
+
+      /* Table → card layout on mobile */
+      .resource-table thead { display: none; }
+      .resource-table, .resource-table tbody,
+      .resource-table tr, .resource-table td {
+        display: block;
+        width: 100%;
+      }
+      .resource-table tr {
+        background: var(--paper-warm);
+        border: 1px solid var(--paper-rule);
+        border-radius: 4px;
+        margin-bottom: 0.75rem;
+        padding: 0.8rem 1rem;
+      }
+      .resource-table tr:last-child { margin-bottom: 0; }
+      .resource-table td {
+        padding: 0.2rem 0;
+        border: none;
+        font-size: 0.85rem;
+      }
+      .resource-table td:first-child {
+        font-size: 0.95rem;
+        margin-bottom: 0.2rem;
+        white-space: normal;
+      }
+      .resource-table td::before {
+        content: attr(data-label);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        display: block;
+        margin-bottom: 0.1rem;
+      }
+      .resource-table td:first-child::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="header-label">Sanjeev Signals · Developer Guide · .NET Ecosystem</span>
+  <h1>How to <em>Actually</em> Learn .NET<br>Without Losing Your Mind</h1>
+  <p class="header-sub">A clear, honest strategy — from zero to building real things</p>
+</header>
+<div class="rule-strip"></div>
+<div class="byline-bar">
+  <span class="brand-tag">Sanjeev Signals</span>
+  <div class="byline-sep"></div>
+  <span class="author-name">Er. Sanjeev Singh <span>· Author &amp; Independent Trader</span></span>
+  <div class="byline-sep"></div>
+  <span class="publish-date">May 2026</span>
+</div>
+
+<div class="container">
+
+  <div class="opening">
+    <p class="lead">
+      Most people who try to learn .NET give up somewhere around week three. Not because it's too hard — but because nobody told them the right order to learn things. They jumped into ASP.NET before understanding C#, or they followed five tutorials at once and retained nothing.
+    </p>
+    <p>
+      This article isn't a tutorial. It's a strategy. Read it once, understand the map, then go learn. By the end, you'll know exactly what to learn, in what order, from where — and why that sequence matters.
+    </p>
+  </div>
+
+  <!-- ── WHAT IS .NET ── -->
+  <section>
+    <span class="section-number">01 — Context</span>
+    <h2>First, What Exactly Is .NET?</h2>
+    <p>
+      .NET is Microsoft's platform for building software. Think of it as a giant toolkit. With it, you can build websites, APIs, desktop apps, mobile apps, games, and cloud services — all using the same language: <strong>C#</strong>.
+    </p>
+    <p>
+      The version you should learn today is <strong>.NET 8</strong> (or .NET 9 if you're reading this later). Forget about the older "ASP.NET Framework" — that's legacy. The modern .NET is cross-platform, fast, and actively supported.
+    </p>
+
+    <div class="callout">
+      <p>C# is the language. .NET is the platform. You need both — but always learn C# first. The framework makes no sense until you can think in the language.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE STRATEGY ── -->
+  <section>
+    <span class="section-number">02 — The Strategy</span>
+    <h2>The Six-Phase Learning Arc</h2>
+    <p>
+      Here's the honest truth: .NET covers a lot of ground. Trying to learn all of it at once is how you burn out. The trick is to follow a sequence where each phase builds on the last — and to resist jumping ahead.
+    </p>
+
+    <div class="phase-grid">
+
+      <div class="phase-card">
+        <span class="phase-tag">Phase 1</span>
+        <h4>C# — The Language Itself</h4>
+        <p>Variables, loops, conditionals, methods, classes, OOP (inheritance, interfaces, polymorphism), exception handling, LINQ, and async/await. This phase feels slow but it's the most important investment you'll make.</p>
+        <span class="duration">⏱ 3–4 weeks at 1–2 hrs/day</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-tag">Phase 2</span>
+        <h4>.NET Fundamentals</h4>
+        <p>Learn the .NET CLI, how projects are structured, how NuGet packages work, Dependency Injection concepts, and how to read official documentation. This is "learning how to swim in the ecosystem."</p>
+        <span class="duration">⏱ 1–2 weeks</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-tag">Phase 3</span>
+        <h4>ASP.NET Core — Web &amp; APIs</h4>
+        <p>This is where most people want to start — and where most people should not start. Once your C# is solid, learn MVC for web apps, Web API for REST endpoints, routing, middleware, and JWT authentication.</p>
+        <span class="duration">⏱ 4–6 weeks</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-tag">Phase 4</span>
+        <h4>Entity Framework Core — Databases</h4>
+        <p>EF Core is .NET's ORM — it lets you work with databases using C# classes instead of raw SQL. Learn Code First migrations, LINQ queries against a database, and relationships (one-to-many, many-to-many).</p>
+        <span class="duration">⏱ 2–3 weeks</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-tag">Phase 5</span>
+        <h4>Build One Real Project</h4>
+        <p>Stop watching tutorials. Build something: a task manager, a blog, a simple e-commerce backend. You'll hit real problems that no tutorial prepared you for — and solving those is how you actually learn.</p>
+        <span class="duration">⏱ 3–4 weeks (ongoing)</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-tag">Phase 6</span>
+        <h4>Advanced Topics (Pick Your Track)</h4>
+        <p>Now you choose your path: Blazor for C# in the browser, SignalR for real-time apps, MAUI for desktop/mobile, microservices architecture, or Azure deployment. You'll know which one matters for your goals by this point.</p>
+        <span class="duration">⏱ Ongoing</span>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider ornament"></div>
+
+  <!-- ── COMMON MISTAKES ── -->
+  <section>
+    <span class="section-number">03 — What Not to Do</span>
+    <h2>Mistakes That Kill Progress</h2>
+    <p>These are the most common traps. Knowing them upfront saves weeks of frustration.</p>
+
+    <ul class="mistake-list">
+      <li><strong>Skipping C# basics</strong> — You cannot understand ASP.NET without understanding interfaces, generics, and dependency injection. The shortcut costs you more time than it saves.</li>
+      <li><strong>Following multiple tutorials simultaneously</strong> — Pick one source per phase. Variety feels productive. It isn't.</li>
+      <li><strong>Tutorial purgatory</strong> — Watching 40 hours of videos without building anything is not learning. It's procrastination with better lighting.</li>
+      <li><strong>Trying to learn .NET Framework (the old one)</strong> — You'll find lots of old Stack Overflow answers and YouTube videos about the legacy framework. Don't confuse it with modern .NET Core / .NET 5+.</li>
+      <li><strong>Waiting until you "feel ready" to start a project</strong> — You'll never feel ready. Start anyway, in Phase 5.</li>
+    </ul>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── RESOURCES ── -->
+  <section>
+    <span class="section-number">04 — Resources</span>
+    <h2>Where to Actually Learn</h2>
+    <p>You don't need to buy anything to learn .NET professionally. Here's an honest breakdown:</p>
+
+    <table class="resource-table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Best For</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Microsoft Learn</td>
+          <td data-label="Best For">Structured, official C# and .NET paths with hands-on labs. Start here.</td>
+          <td data-label="Cost"><span class="badge free">Free</span></td>
+        </tr>
+        <tr>
+          <td>Kudvenkat (YouTube)</td>
+          <td data-label="Best For">Deep, methodical C# and ASP.NET series. Best channel for serious learners.</td>
+          <td data-label="Cost"><span class="badge free">Free</span></td>
+        </tr>
+        <tr>
+          <td>Tim Corey (YouTube)</td>
+          <td data-label="Best For">Real-world patterns, architecture decisions, professional thinking.</td>
+          <td data-label="Cost"><span class="badge free">Free</span></td>
+        </tr>
+        <tr>
+          <td>CodeWithHarry</td>
+          <td data-label="Best For">Hindi-friendly beginner content. Good for Phase 1 if you prefer vernacular explanations.</td>
+          <td data-label="Cost"><span class="badge free">Free</span></td>
+        </tr>
+        <tr>
+          <td>Udemy (Mosh Hamedani)</td>
+          <td data-label="Best For">Well-structured paid courses if you want a complete guided experience.</td>
+          <td data-label="Cost"><span class="badge paid">Paid</span></td>
+        </tr>
+        <tr>
+          <td>Official .NET Docs</td>
+          <td data-label="Best For">The ground truth. Bookmark <code>docs.microsoft.com</code>. Come back to it constantly.</td>
+          <td data-label="Cost"><span class="badge free">Free</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE TECH STACK ── -->
+  <section>
+    <span class="section-number">05 — Tools</span>
+    <h2>Your Day-One Setup</h2>
+    <p>Keep it simple at the start. You need three things:</p>
+
+    <h3>Visual Studio Community (Windows) or VS Code (any OS)</h3>
+    <p>
+      Visual Studio Community is free and is the industry-standard IDE for .NET on Windows. If you're on Mac or Linux, use VS Code with the C# Dev Kit extension. Either one works — don't overthink this choice.
+    </p>
+
+    <h3>The .NET SDK</h3>
+    <p>
+      Download the latest LTS version from <code>dotnet.microsoft.com</code>. Once installed, open a terminal and run:
+    </p>
+    <pre>dotnet --version</pre>
+    <p>If you see a version number, you're set. That's your entire dev environment for the first three phases.</p>
+
+    <h3>A GitHub Account</h3>
+    <p>
+      Commit your code from day one. Even messy, broken code. You'll look back in six months and be genuinely impressed by how far you've come — but only if there's something to look back at.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── WHAT CAN YOU BUILD ── -->
+  <section>
+    <span class="section-number">06 — Outcomes</span>
+    <h2>What You Can Build When You're Done</h2>
+    <p>After completing Phases 1–5, you'll have the skills to build:</p>
+
+    <p>
+      <strong>REST APIs</strong> that mobile apps or front-end frameworks (React, Angular) consume. This is the most in-demand .NET skill in the job market right now.
+    </p>
+    <p>
+      <strong>Full-stack web apps</strong> with server-rendered pages using ASP.NET MVC — the kind of apps that power enterprise software, internal tools, and dashboards.
+    </p>
+    <p>
+      <strong>Desktop applications</strong> using WPF or WinForms — useful if you're building internal enterprise tools or Windows-specific software.
+    </p>
+    <p>
+      <strong>Automation and scripting tools</strong> — .NET console apps are underrated for building powerful internal scripts, data processors, and file management utilities.
+    </p>
+
+    <div class="callout">
+      <p>The goal isn't to finish the roadmap. The goal is to build something real as quickly as possible — and let the roadmap guide what you learn next based on what you actually need.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-block">
+    <h3>Your First Step, Right Now</h3>
+    <p>
+      Go to <code>learn.microsoft.com</code>, search for "C# for Beginners," and start the first module. Don't install anything fancy yet. Don't pick a project. Don't read five more articles about where to start.
+    </p>
+    <p style="margin-top: 0.8rem;">
+      The only difference between people who learn .NET and people who don't is that the former started — and kept going past week two when it felt slow and confusing. That confusion is normal. It passes. Keep going.
+    </p>
+  </div>
+
+  <!-- ── SOCIAL CTA ── -->
+  <div class="social-cta">
+    <div class="cta-text">
+      <strong>Follow Sanjeev Signals</strong>
+      <p>Pre-market clarity. Rule-based execution. Articles, analysis &amp; trading frameworks — published weekly.</p>
+    </div>
+    <a class="cta-btn" href="https://www.linkedin.com/in/sanjeevsignals" target="_blank" rel="noopener">Follow on LinkedIn ↗</a>
+  </div>
+
+</div><!-- /.container -->
+
+<footer>
+  © 2026 Sanjeev Signals &nbsp;·&nbsp; Er. Sanjeev Singh &nbsp;·&nbsp; Pre-Market Clarity. Rule-Based Execution. &nbsp;·&nbsp; Not affiliated with Microsoft
+</footer>
+
+</body>
+</html>
